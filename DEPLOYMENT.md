@@ -78,7 +78,9 @@ BODY_SIZE_LIMIT=2M
 
 ### 2. Login GHCR di VPS
 
-Jika package GHCR masih private:
+Image publik: `ghcr.io/farendraaugust/itnsa-marking-score:latest` dapat di-pull tanpa login.
+
+Jika package diubah menjadi private, login dulu di VPS:
 
 ```bash
 echo "<PAT_WITH_read:packages>" | docker login ghcr.io -u <github-username> --password-stdin
