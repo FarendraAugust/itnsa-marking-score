@@ -1,0 +1,28 @@
+@import "tailwindcss";
+
+/* Custom Competition Theme & Print Rules */
+:root {
+	--brand: #2563eb;
+	--brand-hover: #1d4ed8;
+	--brand-light: #eff6ff;
+}
+
+@media print {
+	.no-print {
+		display: none !important;
+	}
+	body {
+		background: #ffffff !important;
+		color: #000000 !important;
+	}
+	.main-content {
+		max-width: 100% !important;
+		padding: 0 !important;
+		margin: 0 !important;
+	}
+	.evaluation-sheet {
+		box-shadow: none !important;
+		border: none !important;
+		padding: 0 !important;
+	}
+}

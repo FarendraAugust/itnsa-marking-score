@@ -1,0 +1,35 @@
+node_modules
+
+# Output
+.output
+.vercel
+.netlify
+.wrangler
+.cloudflare
+/.svelte-kit
+/build
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Env
+.env
+.env.*
+!.env.example
+!.env.test
+
+# Database (fresh database is created at runtime)
+/data/*.sqlite
+/data/*.sqlite-shm
+/data/*.sqlite-wal
+
+# Keys & certificates
+*.key
+*.pem
+*.crt
+*.p12
+
+# Vite
+vite.config.js.timestamp-*
+vite.config.ts.timestamp-*

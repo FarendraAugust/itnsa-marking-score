@@ -1,0 +1,25 @@
+services:
+  app:
+    image: ghcr.io/farendraaugust/itnsa-marking-score:latest
+    build:
+      context: .
+    container_name: itnsa-marking-score
+    restart: unless-stopped
+    ports:
+      - "${APP_PORT:-3000}:3000"
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      ORIGIN: ${ORIGIN:-http://localhost:3000}
+      BODY_SIZE_LIMIT: ${BODY_SIZE_LIMIT:-2M}
+    volumes:
+      - itnsa-data:/app/data
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:3000/login"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+volumes:
+  itnsa-data:
