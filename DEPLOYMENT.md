@@ -47,11 +47,25 @@ docker run -d \
   --name itnsa-marking-score \
   -p 3000:3000 \
   -e ORIGIN=http://localhost:3000 \
-  -v itnsa-data:/app/data \
+  -v itnsa-marking-score-data:/app/data \
   itnsa-marking-score:local
 ```
 
 ## Deploy ke VPS
+
+### Instalasi aktif
+
+| Item | Nilai |
+|---|---|
+| Host | `103.178.174.91` (SSH port 22, user `root`) |
+| Folder deploy | `/opt/itnsa-marking-score` |
+| URL | `http://103.178.174.91:3020` |
+| Volume database | `itnsa-marking-score-data` |
+| Port host | `3020` (container `3000`) |
+
+Server ini sudah menjalankan container `itnsa-marking-score`. Auto-deploy dari GitHub Actions aktif.
+
+Catatan: Docker di server ini menyimpan kredensial `ghcr.io` lama yang tidak valid, sehingga pull harus memakai config Docker terisolasi. Workflow deploy sudah menangani ini.
 
 ### 1. Siapkan VPS
 
@@ -71,8 +85,8 @@ cp .env.example .env
 Sesuaikan `.env`:
 
 ```env
-APP_PORT=3000
-ORIGIN=https://scoreboard.example.com
+APP_PORT=3020
+ORIGIN=http://<IP_PUBLIK_VPS>:3020
 BODY_SIZE_LIMIT=2M
 ```
 
@@ -145,13 +159,13 @@ Repository variable:
 
 ## Database
 
-Database berada di volume Docker `itnsa-data`, file `itnsa.sqlite` di `/app/data`.
+Database berada di volume Docker `itnsa-marking-score-data`, file `itnsa.sqlite` di `/app/data`.
 
 ### Backup
 
 ```bash
 docker run --rm \
-  -v itnsa-data:/data \
+  -v itnsa-marking-score-data:/data \
   -v "$PWD":/backup \
   alpine \
   tar czf /backup/itnsa-backup-$(date +%Y%m%d-%H%M%S).tar.gz -C /data .
@@ -162,7 +176,7 @@ docker run --rm \
 ```bash
 docker compose down
 docker run --rm \
-  -v itnsa-data:/data \
+  -v itnsa-marking-score-data:/data \
   -v "$PWD":/backup \
   alpine \
   sh -c "rm -rf /data/* && tar xzf /backup/itnsa-backup-YYYYMMDD-HHMMSS.tar.gz -C /data"
@@ -173,7 +187,7 @@ docker compose up -d
 
 ```bash
 docker compose down
-docker volume rm itnsa-data
+docker volume rm itnsa-marking-score-data
 docker compose up -d
 ```
 
