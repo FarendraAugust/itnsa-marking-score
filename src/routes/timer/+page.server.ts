@@ -37,6 +37,7 @@ export const load: PageServerLoad = async ({ url, locals, cookies }) => {
 		path: '/',
 		httpOnly: false,
 		sameSite: 'lax',
+		secure: url.protocol === 'https:',
 		maxAge: 60 * 60 * 24 * 7
 	});
 

@@ -10,7 +10,7 @@ export const load: PageServerLoad = async () => {
 };
 
 export const actions: Actions = {
-	default: async ({ request, cookies }) => {
+	default: async ({ request, cookies, url }) => {
 		if (hasAdminUser()) {
 			return fail(400, { error: 'Administrator sudah dibuat sebelumnya.' });
 		}
@@ -37,6 +37,7 @@ export const actions: Actions = {
 				path: '/',
 				httpOnly: true,
 				sameSite: 'lax',
+				secure: url.protocol === 'https:',
 				expires: session.expiresAt
 			});
 		} catch (err: any) {

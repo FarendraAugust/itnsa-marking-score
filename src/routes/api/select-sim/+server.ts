@@ -1,7 +1,7 @@
 import type { RequestHandler } from './$types';
 import { json } from '@sveltejs/kit';
 
-export const POST: RequestHandler = async ({ request, cookies }) => {
+export const POST: RequestHandler = async ({ request, cookies, url }) => {
 	const body = await request.json().catch(() => ({}));
 	const simId = body.simulationId;
 
@@ -10,6 +10,7 @@ export const POST: RequestHandler = async ({ request, cookies }) => {
 			path: '/',
 			httpOnly: false,
 			sameSite: 'lax',
+			secure: url.protocol === 'https:',
 			maxAge: 60 * 60 * 24 * 7
 		});
 	}

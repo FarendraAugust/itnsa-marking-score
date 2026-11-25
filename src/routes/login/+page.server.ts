@@ -28,6 +28,8 @@ export const actions: Actions = {
 				path: '/',
 				httpOnly: true,
 				sameSite: 'lax',
+				// SvelteKit defaults this to true in production, which breaks HTTP-only hosts.
+				secure: url.protocol === 'https:',
 				expires: session.expiresAt
 			});
 		} catch (err: any) {
@@ -51,6 +53,7 @@ export const actions: Actions = {
 				path: '/',
 				httpOnly: true,
 				sameSite: 'lax',
+				secure: url.protocol === 'https:',
 				expires: session.expiresAt
 			});
 		} catch (err: any) {

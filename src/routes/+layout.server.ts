@@ -11,6 +11,7 @@ export const load: LayoutServerLoad = async ({ locals, cookies, url }) => {
 			path: '/',
 			httpOnly: false,
 			sameSite: 'lax',
+			secure: url.protocol === 'https:',
 			maxAge: 60 * 60 * 24 * 7
 		});
 	}
